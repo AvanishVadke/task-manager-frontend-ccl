@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { FaTrash, FaFileDownload, FaPlus, FaTasks } from "react-icons/fa";
-import "./App.css";
+import "./App.css"; 
+
+const apiUrl = process.env.REACT_APP_API_URL;
 
 function App() {
   const [tasks, setTasks] = useState([]);
@@ -10,7 +12,7 @@ function App() {
   const [file, setFile] = useState(null);
 
   const fetchTasks = async () => {
-    const res = await axios.get("http://54.87.130.80:9000/api/tasks");
+    const res = await axios.get(`${apiUrl}/api/tasks`);
     setTasks(res.data);
   };
 
@@ -25,7 +27,7 @@ function App() {
     formData.append("description", description);
     if (file) formData.append("file", file);
 
-    await axios.post("http://54.87.130.80:9000/api/tasks", formData);
+    await axios.post(`${apiUrl}/api/tasks`, formData);
     fetchTasks();
     setTaskName("");
     setDescription("");
