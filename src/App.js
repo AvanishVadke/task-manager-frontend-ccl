@@ -35,7 +35,7 @@ function App() {
   };
 
   const handleDelete = async (taskId) => {
-    await axios.delete(`http://54.87.130.80:9000/api/tasks/${taskId}`);
+    await axios.delete(`http://54.86.27.154:9000/api/tasks/${taskId}`);
     fetchTasks();
   };
 
