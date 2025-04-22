@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { FaTrash, FaFileDownload, FaPlus, FaTasks } from "react-icons/fa";
-import "./App.css"; 
+import "./App.css";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -10,6 +10,7 @@ function App() {
   const [taskName, setTaskName] = useState("");
   const [description, setDescription] = useState("");
   const [file, setFile] = useState(null);
+  const fileInputRef = useRef(null);
 
   const fetchTasks = async () => {
     const res = await axios.get(`${apiUrl}/api/tasks`);
@@ -32,10 +33,13 @@ function App() {
     setTaskName("");
     setDescription("");
     setFile(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
   };
 
   const handleDelete = async (taskId) => {
-    await axios.delete(`http://54.87.130.80:9000/api/tasks/${taskId}`);
+    await axios.delete(`${apiUrl}/api/tasks/${taskId}`);
     fetchTasks();
   };
 
@@ -47,7 +51,9 @@ function App() {
       </div>
 
       <div className="glass-card">
-      <h1><FaTasks /> Task Manager</h1>
+        <h1>
+          <FaTasks /> Task Manager
+        </h1>
 
         <form className="form" onSubmit={handleSubmit}>
           <input
@@ -62,7 +68,11 @@ function App() {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
-          <input type="file" onChange={(e) => setFile(e.target.files[0])} />
+          <input
+            type="file"
+            onChange={(e) => setFile(e.target.files[0])}
+            ref={fileInputRef}
+          />
           <button className="submit-btn" type="submit">
             <FaPlus /> Add Task
           </button>
