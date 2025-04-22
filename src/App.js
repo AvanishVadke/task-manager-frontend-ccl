@@ -10,7 +10,7 @@ function App() {
   const [taskName, setTaskName] = useState("");
   const [description, setDescription] = useState("");
   const [file, setFile] = useState(null);
-  const fileInputRef = useRef(null);
+  const fileInputRef = useRef(null); 
 
   const fetchTasks = async () => {
     const res = await axios.get(`${apiUrl}/api/tasks`);
@@ -34,7 +34,7 @@ function App() {
     setDescription("");
     setFile(null);
     if (fileInputRef.current) {
-      fileInputRef.current.value = "";
+      fileInputRef.current.value = ""; 
     }
   };
 
@@ -51,9 +51,7 @@ function App() {
       </div>
 
       <div className="glass-card">
-        <h1>
-          <FaTasks /> Task Manager
-        </h1>
+        <h1><FaTasks /> Task Manager</h1>
 
         <form className="form" onSubmit={handleSubmit}>
           <input
@@ -71,7 +69,7 @@ function App() {
           <input
             type="file"
             onChange={(e) => setFile(e.target.files[0])}
-            ref={fileInputRef}
+            ref={fileInputRef} 
           />
           <button className="submit-btn" type="submit">
             <FaPlus /> Add Task
